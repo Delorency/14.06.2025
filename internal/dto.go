@@ -14,8 +14,9 @@ type AddFileToArchiveRequest struct {
 }
 
 type CheckArchiveStatusResponse struct {
-	TaskID   string   `json:"taskID"`
-	Status   string   `json:"status"`
-	Errors   []string `json:"errors"`
-	Download string   `json:"download"`
+	TaskID     string   `json:"taskID"`
+	Status     string   `json:"status"`
+	FilesCount int      `json:"filesCount"`
+	Errors     []string `json:"errors"`
+	Download   string   `json:"download"`
 }

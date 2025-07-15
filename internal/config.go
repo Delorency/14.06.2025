@@ -44,7 +44,7 @@ func MustLoad() *Config {
 		ext = "pdf,jpeg,jpg"
 	}
 
-	re := regexp.MustCompile(`^[a-zA-Z]+(?:,[a-zA-Z]+)*$`)
+	re := regexp.MustCompile(`^\.?[a-zA-Z0-9]+(?:,\.?[a-zA-Z0-9]+)*$`)
 
 	if !re.MatchString(ext) {
 		log.Fatalln("Ошибка парсинга допустимых расширений")

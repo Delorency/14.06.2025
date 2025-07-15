@@ -10,9 +10,8 @@ import (
 func (s *storage) AddArchive() (*archive, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-
 	if s.ActiveArchives >= s.Cfg.ArchiveCount {
-		return nil, errors.New("В данным момент сервер занят")
+		return nil, errors.New("В данный момент сервер занят")
 	}
 
 	taskID := fmt.Sprintf("task_%d", time.Now().UnixNano())
@@ -26,5 +25,6 @@ func (s *storage) AddArchive() (*archive, error) {
 
 	s.Archives[taskID] = task
 	s.ActiveArchives++
+
 	return task, nil
 }

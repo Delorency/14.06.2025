@@ -22,17 +22,16 @@ func IsValidExtension(filename string, allowed []string) bool {
 }
 
 func DownloadFile(url string) ([]byte, error) {
-	resp, err := http.Get(url)
+	res, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer res.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("Ошибка получения файла: %d", resp.StatusCode)
+	if res.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("Ошибка получения файла: %d", res.StatusCode)
 	}
-
-	return io.ReadAll(resp.Body)
+	return io.ReadAll(res.Body)
 }
 
 func CreateZipArchive(files map[string][]byte) (*bytes.Buffer, error) {

@@ -11,10 +11,8 @@ type IStorage interface {
 	AddArchive() (*archive, error)
 	CompleteArchive(string)
 	GetArchive(string) (*archive, bool)
-	ArchiveCheck(*archive) error
 	AddFileToArchive(*archive, string) error
-	AddDownload(*archive) string
-	ProcessArchive()
+	ProcessOneArchive(*archive)
 }
 
 type TaskStatus string
@@ -37,14 +35,14 @@ type archive struct {
 
 	CreatedAt time.Time
 
-	mu sync.Mutex
+	mu sync.RWMutex
 }
 
 type storage struct {
 	Archives       map[string]*archive
 	ActiveArchives int
 	Cfg            *config.ConfigArchive
-	mu             sync.Mutex
+	mu             sync.RWMutex
 }
 
 func NewStorage(cfg *config.ConfigArchive) IStorage {
