@@ -1,7 +1,8 @@
 package app
 
 import (
-	config "arch/internal"
+	"arch/internal"
+	"arch/internal/storage"
 	ht "arch/internal/transport/http"
 	"context"
 	"log"
@@ -13,9 +14,11 @@ import (
 )
 
 func Start() {
-	cfg := config.MustLoad()
+	cfg := internal.MustLoad()
 
-	server := ht.NewHTTPServer(cfg.Http)
+	storage := storage.NewStorage(cfg.Arch)
+
+	server := ht.NewHTTPServer(cfg.Http, cfg.Arch, storage)
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
